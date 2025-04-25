@@ -39,7 +39,7 @@ source venv/bin/activate  # Linux/Mac
 3. 安装依赖：
 
 ```bash
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
+pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 ```
 
 4. 配置API Key：
