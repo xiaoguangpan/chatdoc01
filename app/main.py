@@ -28,12 +28,20 @@ app = FastAPI(
 )
 
 # 配置CORS
+origins = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "null",  # 允许通过文件系统直接打开的页面
+    "file://"  # 允许通过文件系统直接打开的页面
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 # 挂载静态文件
