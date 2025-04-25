@@ -1,12 +1,18 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from fastapi import Request
 from contextlib import asynccontextmanager
 import uvicorn
 import os
 
 from app.api.routes import router
 from app.models.database import init_db
+
+# 初始化模板
+templates = Jinja2Templates(directory="app/templates")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -34,13 +40,9 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # 添加根路由
-@app.get("/")
-async def root():
-    return {
-        "message": "欢迎使用本地智能文档问答助手",
-        "docs_url": "/docs",
-        "api_prefix": "/api"
-    }
+@app.get("/", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 # 注册路由
 app.include_router(router, prefix="/api")
