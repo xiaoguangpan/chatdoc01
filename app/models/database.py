@@ -1,10 +1,16 @@
-from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey, Text, create_engine
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from datetime import datetime
+import os
+from dotenv import load_dotenv
 
-from app.config import SQLITE_DB_PATH
+load_dotenv()
 
+DB_PATH = os.getenv("DB_PATH", "./db/app_data.db")
+SQLITE_URL = f"sqlite:///{DB_PATH}"
+
+engine = create_engine(SQLITE_URL)
 Base = declarative_base()
 
 class Project(Base):
@@ -62,7 +68,7 @@ class Message(Base):
     session_id = Column(Integer, ForeignKey("chat_sessions.session_id"), nullable=False)
     sender = Column(String, nullable=False)
     text = Column(Text, nullable=False)
-    retrieved_chunk_html_ids = Column(Text, nullable=True)  # JSON string
+    retrieved_chunk_html_ids = Column(String, nullable=True)
     timestamp = Column(DateTime, default=datetime.utcnow)
     
     chat_session = relationship("ChatSession", back_populates="messages")
@@ -71,10 +77,7 @@ class Setting(Base):
     __tablename__ = "settings"
     
     key = Column(String, primary_key=True)
-    value = Column(Text, nullable=False)
+    value = Column(String, nullable=False)
 
-# 创建数据库引擎和表
 def init_db():
-    engine = create_engine(f"sqlite:///{SQLITE_DB_PATH}")
-    Base.metadata.create_all(engine)
-    return engine 
+    Base.metadata.create_all(engine) 
