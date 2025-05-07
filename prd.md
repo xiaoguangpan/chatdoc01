@@ -364,7 +364,7 @@
 *   **Chunk Size (in Settings):** `512` (单位：tokens 或 characters，需根据模型和测试确定)
 *   **Chunk Overlap (in Settings):** `50` (单位：tokens 或 characters)
 *   **LLM API Endpoint (in Settings):** 请参照cursor的 @深度思考 和 @对话(Chat)-文本 API 文档。
-*   **LLM API Key (in Settings, Base64 Encoded):** 0d5e7ae6-a55a-40a0-ad0d-4b2f0b4b4e65
+*   **LLM API Key (in Settings, Base64 Encoded):** 
 *   **LLM Model Name (in Settings):** `doubao-1-5-thinking-pro-250415`
 *   **ChromaDB Path (Config/Code):** `./db/chroma_db` (示例本地路径)
 *   **SQLite DB Path (Config/Code):** `./db/app_data.db` (示例本地路径)
